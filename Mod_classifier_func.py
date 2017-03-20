@@ -5,6 +5,8 @@ Feature_types = [x for x in range(10)]
 class ModFeatures(object):
 
     def __init__(self, a, b, feature_type):
+        if a > b:
+            a, b = b, a
         self.type = feature_type
         self.a = a
         self.b = b
