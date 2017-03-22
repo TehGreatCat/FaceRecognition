@@ -37,7 +37,7 @@ class AdaBoost:
                     features.append(ModFeatures(a, b, f))   # Все features из списка
 
         images = self.set_pos + self.set_neg
-        print(images[0])
+        # print(images[0])
 
         votes = dict()
         i = 0
@@ -110,6 +110,6 @@ class StrongClassifier(object):
         self.img = img
 
     def get_result(self):
-        left = sum(map(lambda alpha, clf: alpha * clf.get_score(self.img), self.alpha, self.clf_list))
+        left = sum(list(map(lambda alpha, clf: alpha * clf.get_score(self.img), self.alpha, self.clf_list)))
         right = 0.5 * sum(self.alpha)  # взять из статьи про пол <<<<<
         return 1 if left >= right else 0

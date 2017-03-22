@@ -1,5 +1,4 @@
 from AdaBoost import *
-from PIL import Image
 import cv2
 
 
@@ -7,7 +6,7 @@ def create_image_list(folder_pos, folder_neg, num_of_pos, num_of_neg):
 
     pos_image_list = []
     neg_image_list = []
-    image = cv2.imread("FinalGood\\1.pgm")
+
     # print("here", image)
 
     for i in range(1, num_of_pos):
@@ -22,14 +21,23 @@ def create_image_list(folder_pos, folder_neg, num_of_pos, num_of_neg):
     return [pos_image_list, neg_image_list]
 
 
+def pgm_simplifier(image):
+    image_new = [[] for x in range(len(image))]
+    for i in range(0, len(image) - 1):
+        for j in range(0, len(image[i]) - 1):
+            image_new[i].append(image[i][j].tolist().pop())
+    return image_new
+
+
 def main(number_of_stages, set_pos, set_neg):
     trainer = AdaBoost(set_pos, set_neg, number_of_stages)
     classifiers = trainer.train_simple()
-    # StrongClassifier(classifiers, image)
-    print(classifiers)
+    image = cv2.imread("1.pgm")
+    print(StrongClassifier(classifiers, pgm_simplifier(image)).get_result())
+    # print(classifiers)
 
 images = create_image_list("FinalGood", "Bad", 400, 450)
-main(100, images[0], images[1])
+main(3, images[0], images[1])
 
 
 
